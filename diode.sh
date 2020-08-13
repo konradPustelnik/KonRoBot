@@ -10,14 +10,17 @@ die_usage() {
    cat >&2 <<__EOF__
 Usage: $0 [OPTIONS...] <timeout>
    -p             turn on/off the diode <-p 21>
-
+    
 __EOF__
    exit 1
 }
 
-while getopts "p:h" flag; do
+declare -a PIN
+
+while getopts "p:t:h" flag; do
    case "$flag" in
-   p) PIN="$OPTARG";;
+   p)   PIN="$OPTARG";;
+   t)   PIN=($2 $3 $4); shift 2;;
    h) die_usage;;
    [?]) die_usage;;
    esac
@@ -34,11 +37,22 @@ TIMEOUT="$1"
 trap 'gpio_pin_access "$PIN" "unexport"' EXIT
 
 gpio_pin_access() {
-    echo $1 > /sys/class/gpio/$2
+    for i in ${PIN[@]}
+    do
+        echo $i > /sys/class/gpio/$2
+    done 
 }
 
 gpio_pin_direction() {
-    echo $1 > /sys/class/gpio/gpio$2/direction
+    for i in ${PIN[@]}
+    do
+        echo $1 > /sys/class/gpio/gpio$i/direction
+    done 
+}
+
+prepare_pin(){
+    gpio_pin_access "$1" "export"
+    gpio_pin_direction "out" "$1"
 }
 
 gpio_pin_value() {
@@ -46,10 +60,32 @@ gpio_pin_value() {
 }
 
 turn_on_sleep_turn_off() {
-    gpio_pin_access "$1" "export"
-    gpio_pin_direction "out" "$1"
+    prepare_pin "$1"
     gpio_pin_value "1" "$1"
     sleep $TIMEOUT
 }
 
-turn_on_sleep_turn_off $PIN
+traffic_lights(){
+    prepare_pin "$1"
+    gpio_pin_value "1" "${PIN[0]}"
+    sleep $TIMEOUT
+    gpio_pin_value "1" "${PIN[1]}"
+    sleep 1
+    gpio_pin_value "0" "${PIN[0]}"
+    gpio_pin_value "0" "${PIN[1]}"
+    gpio_pin_value "1" "${PIN[2]}"
+    sleep $TIMEOUT
+    gpio_pin_value "0" "${PIN[2]}"
+    gpio_pin_value "1" "${PIN[1]}"
+    sleep 1
+    gpio_pin_value "0" "${PIN[1]}"
+    gpio_pin_value "1" "${PIN[0]}"
+    sleep $TIMEOUT
+}
+
+if [[ ${#PIN[@]} == 1 ]];then
+    turn_on_sleep_turn_off $PIN
+elif [[ ${#PIN[@]} == 3 ]];then
+    traffic_lights ${PIN[@]}
+fi
+
