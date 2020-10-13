@@ -20,6 +20,7 @@ public:
     void draw_rectangle();
     void drive_independently_with_manual_sensor();
     void drive_manually();
+    void drive_independently_with_light_sensors();
 
 private:
     void go_forward(int speed);

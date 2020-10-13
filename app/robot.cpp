@@ -1,6 +1,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include "file.h"
 #include "robot.h"
 
 auto diodePin {21};
@@ -93,6 +94,32 @@ void Robot::drive_manually()
                 break;
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
+    stop();
+}
+
+void Robot::drive_independently_with_light_sensors()
+{
+    for (int i=0; i<4; i++) make_signal();
+
+    auto path_to_analog = "/home/pi/sensor";
+    File file(path_to_analog);
+
+    while (stop_button.is_pressed())
+    {
+        if(file.read() == "0")
+        {
+            go_forward(60);
+        }
+        else if(file.read() > "0")
+        {
+            go_right(100,100);
+        }
+        else if(file.read() < "0")
+        {
+            go_left(100,100);
+        }
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
     stop();
 }
