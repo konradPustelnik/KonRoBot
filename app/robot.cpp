@@ -6,6 +6,8 @@
 auto diodePin {21};
 auto buzzerPin {20};
 auto buttonPin {17};
+auto rightSensorPin {0};
+auto leftSensorPin {26};
 auto rightMotorPwm {23};
 auto rightMotorDir {24};
 auto leftMotorPwm {26};
@@ -15,6 +17,8 @@ Robot::Robot() :
     right_motor(rightMotorPwm, rightMotorDir),
     left_motor(leftMotorPwm, leftMotorDir),
     stop_button(buttonPin),
+    right_button(rightSensorPin),
+    left_button(leftSensorPin),
     diode(diodePin),
     buzzer(buzzerPin) {}
 Robot::~Robot() { stop(); }
@@ -32,6 +36,32 @@ void Robot::draw_rectangle()
      }  
 }
 
+void Robot::drive_independently_with_manual_sensor()
+{
+    for (int i=0; i<2; i++) make_signal();
+
+    while (stop_button.is_pressed())
+    {
+        go_forward(100);
+        if(left_button.is_pressed() == 0)
+        {
+            make_signal();
+            go_back(100);
+            std::this_thread::sleep_for(std::chrono::milliseconds(400));
+            go_right(100);
+        }
+        if(right_button.is_pressed() == 0)
+        {
+            make_signal();
+            go_back(100);
+            std::this_thread::sleep_for(std::chrono::milliseconds(400));
+            go_left(100);
+        }
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    }
+    stop();
+}
+
 void Robot::go_forward(int speed)
 {
     right_motor.action(-speed);
@@ -46,18 +76,18 @@ void Robot::go_back(int speed)
 
 void Robot::go_right(int speed, int sleep)
 {
-    right_motor.action(0);
-    left_motor.action(speed);
-    std::this_thread::sleep_for(std::chrono::milliseconds(sleep));
     left_motor.action(0);
+    right_motor.action(speed);
+    std::this_thread::sleep_for(std::chrono::milliseconds(sleep));
+    right_motor.action(0);
 }
 
 void Robot::go_left(int speed, int sleep)
 {
-    left_motor.action(0);
-    right_motor.action(-speed);
-    std::this_thread::sleep_for(std::chrono::milliseconds(sleep));
     right_motor.action(0);
+    left_motor.action(-speed);
+    std::this_thread::sleep_for(std::chrono::milliseconds(sleep));
+    left_motor.action(0);
 }
 
 void Robot::stop()

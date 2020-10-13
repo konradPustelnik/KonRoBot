@@ -7,6 +7,8 @@
 class Robot
 {
     Button stop_button;
+    Button right_button;
+    Button left_button;
     Motor right_motor;
     Motor left_motor;
     Diode diode;
@@ -16,6 +18,7 @@ public:
     Robot();
     ~Robot();
     void draw_rectangle();
+    void drive_independently_with_manual_sensor();
 
 private:
     void go_forward(int speed);
