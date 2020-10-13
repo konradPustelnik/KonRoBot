@@ -19,6 +19,7 @@ public:
     ~Robot();
     void draw_rectangle();
     void drive_independently_with_manual_sensor();
+    void drive_manually();
 
 private:
     void go_forward(int speed);

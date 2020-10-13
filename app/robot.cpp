@@ -13,6 +13,8 @@ auto rightMotorDir {24};
 auto leftMotorPwm {26};
 auto leftMotorDir {22};
 
+auto defaultSpeed {100};
+
 Robot::Robot() : 
     right_motor(rightMotorPwm, rightMotorDir),
     left_motor(leftMotorPwm, leftMotorDir),
@@ -28,11 +30,11 @@ void Robot::draw_rectangle()
     make_signal();
     for (int i=0; i<4; i++)
     {
-        go_forward(100);
+        go_forward(defaultSpeed);
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         stop();
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        go_right(100);
+        go_right(defaultSpeed);
      }  
 }
 
@@ -42,22 +44,55 @@ void Robot::drive_independently_with_manual_sensor()
 
     while (stop_button.is_pressed())
     {
-        go_forward(100);
+        go_forward(defaultSpeed);
         if(left_button.is_pressed() == 0)
         {
             make_signal();
-            go_back(100);
+            go_back(defaultSpeed);
             std::this_thread::sleep_for(std::chrono::milliseconds(400));
-            go_right(100);
+            go_right(defaultSpeed);
         }
         if(right_button.is_pressed() == 0)
         {
             make_signal();
-            go_back(100);
+            go_back(defaultSpeed);
             std::this_thread::sleep_for(std::chrono::milliseconds(400));
-            go_left(100);
+            go_left(defaultSpeed);
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    }
+    stop();
+}
+
+void Robot::drive_manually()
+{
+
+    int direction{0};
+
+    for (int i=0; i<3; i++) make_signal();
+
+    while (stop_button.is_pressed())
+    {
+        std::cin >> direction;
+        switch (direction)
+        {
+            case 8:
+                go_forward(defaultSpeed);
+                break;
+            case 4:
+                go_left(defaultSpeed);
+                break;
+            case 6:
+                go_right(defaultSpeed);
+                break;
+            case 2:
+                go_back(defaultSpeed);
+                break;
+            default:
+                stop();
+                break;
+        }
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
     stop();
 }
