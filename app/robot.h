@@ -17,6 +17,7 @@ class Robot
 public:
     Robot();
     ~Robot();
+    void make_signal();
     void draw_rectangle();
     void drive_independently_with_manual_sensor();
     void drive_manually();
@@ -28,5 +29,4 @@ private:
     void go_right(int speed, int sleep=400);
     void go_left(int speed, int sleep=400);
     void stop();
-    void make_signal();
 };

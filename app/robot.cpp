@@ -26,6 +26,16 @@ Robot::Robot() :
     buzzer(buzzerPin) {}
 Robot::~Robot() { stop(); }
 
+void Robot::make_signal()
+{
+    diode.set_state(1);
+    buzzer.set_state(1);
+    std::this_thread::sleep_for(std::chrono::milliseconds(250));
+    diode.set_state(0);
+    buzzer.set_state(0);
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+}
+
 void Robot::draw_rectangle()
 {
     make_signal();
@@ -156,14 +166,4 @@ void Robot::stop()
 {
     left_motor.action(0);
     right_motor.action(0);
-}
-
-void Robot::make_signal()
-{
-    diode.set_state(1);
-    buzzer.set_state(1);
-    std::this_thread::sleep_for(std::chrono::milliseconds(250));
-    diode.set_state(0);
-    buzzer.set_state(0);
-    std::this_thread::sleep_for(std::chrono::milliseconds(500));
 }

@@ -1,7 +1,7 @@
 # KonRoBot #
 
 ### After first cloning, run: 
-* ./scripts/init.sh
+* cd scripts && sed -i -e 's/\r$//' init.sh && ./init.sh
 
 ### For diode.sh:  
 ##### Use command:  

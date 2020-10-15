@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/action.js" type="text/javascript"></script>
     <link rel="stylesheet" href="/style.css" />
     <title>KonRoBot</title>
     <meta charset="UTF-8">
@@ -16,11 +18,10 @@
     </div>
     <div class="row">
         <div class="side">
-            <h2>About Me</h2>
-            <h5>Photo of me:</h5>
+            <h2>About me:</h2>
             <img src="/KonRoBot.img" alt="Avatar" class="image">
-            <p><strong>Left sensor:</strong> <%=value%></p>
-            <p><strong>Right sensor:</strong> <%=value%></p>
+            <p><strong>Sensor value:</strong> <%=value%></p>
+            <p>Positive value is rightSensor, negative value is leftSensor</p>
         </div>
         <div class="main">
             <h2>KonRoBot actions:</h2>
@@ -28,7 +29,7 @@
             <button id="drawRectangle" class="button"><span>Draw rectangle</span></button>
             <button id="driveIndependentlyWithManualSensor" class="button"><span>Drive independently with manual sensor </span></button>
             <button id="driveManually" class="button"><span>Drive manually </span></button>
-            <button id="driveIndependentlyWithManualSensor" class="button"><span>Drive independently with sensors </span></button>
+            <button id="driveIndependentlyWithSensor" class="button"><span>Drive independently with sensors </span></button>
             <button id="stop" class="button"><span>Stop </span></button>
         </div>
     </div>
