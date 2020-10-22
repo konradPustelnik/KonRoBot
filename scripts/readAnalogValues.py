@@ -35,7 +35,7 @@ while True:
     right_value= remap_range(right_sensor, 0, 65535, 0, 100)
 
     #write this value difference to /home/pi/sensor
-    with open("/home/pi/sensor", 'w') as myfile:
+    with open("/home/pi/KonRoBot/sensor", 'w') as myfile:
         myfile.write('{volume}' .format(volume = right_value-left_value))
 
     time.sleep(0.5)

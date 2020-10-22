@@ -9,7 +9,7 @@ var exec = require('child_process').exec, child;
 router.get('/', function(req, res, next) {
     if (req.accepts('text/html')) {
         Promise.all([
-            promises.readFile('/home/pi/sensor', { encoding: 'ascii' }),
+            promises.readFile('/home/pi/KonRoBot/sensor', { encoding: 'ascii' }),
         ]).then(([sensorValue]) => res.render('index', {value: sensorValue}));
     }
     else {
