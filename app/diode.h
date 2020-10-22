@@ -3,8 +3,9 @@
 
 class Diode
 {
-    int rpi_pin, led_state;
+    int rpi_pin;
     Output_pin output_pin;
+
 public:
     Diode(int rpi_pin);
     void set_state(int led_state);

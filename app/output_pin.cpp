@@ -2,7 +2,7 @@
 #include "file.h"
 #include "output_pin.h"
 
-Output_pin::Output_pin(int rpi_pin, int pin_state) : Pin(rpi_pin), rpi_pin(rpi_pin), pin_state(pin_state)
+Output_pin::Output_pin(int rpi_pin) : Pin(rpi_pin), rpi_pin(rpi_pin)
 {
     auto path_to_direction = "/sys/class/gpio/gpio" + std::to_string(rpi_pin) + "/direction";
     File file_direction(path_to_direction);
@@ -10,7 +10,7 @@ Output_pin::Output_pin(int rpi_pin, int pin_state) : Pin(rpi_pin), rpi_pin(rpi_p
 
     auto path_to_value = "/sys/class/gpio/gpio" + std::to_string(rpi_pin) + "/value";
     File file_value(path_to_value);
-    file_value.write(std::to_string(pin_state));
+    file_value.write(std::to_string(0));
 }
     
 Output_pin::~Output_pin()

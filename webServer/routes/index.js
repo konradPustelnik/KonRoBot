@@ -21,23 +21,37 @@ router.get('/', function(req, res, next) {
 router.post('/action', function(req, res, next) {
     if (req.accepts('application/json')) {
         if (req.body.cmd  == "makeSignal"){
-            exec("/home/pi/RPI/KonRoBot/app/makeSignal");
-            //console.log("makeSignal", req.body.cmd);
+            exec("echo 1 > /home/pi/KonRoBot/machineState");
         }
         else if (req.body.cmd  == "drawRectangle"){
-            exec("/home/pi/RPI/KonRoBot/app/drawRectangle");
+            exec("echo 2 > /home/pi/KonRoBot/machineState");
         }
         else if (req.body.cmd  == "driveIndependentlyWithManualSensor"){
-            exec("/home/pi/RPI/KonRoBot/app/driveIndependentlyWithManualSensor");
+            exec("echo 3 > /home/pi/KonRoBot/machineState");
         }
         else if (req.body.cmd  == "driveManually"){
-            exec("/home/pi/RPI/KonRoBot/app/driveManually");
+            exec("echo 4 > /home/pi/KonRoBot/machineState");
         }
         else if (req.body.cmd  == "driveIndependentlyWithSensor"){
-            exec("/home/pi/RPI/KonRoBot/app/driveIndependentlyWithSensor");
+            exec("echo 5 > /home/pi/KonRoBot/machineState");
         }
         else if (req.body.cmd  == "stop"){
-            exec("gpio unexportall");
+            exec("echo 6 > /home/pi/KonRoBot/machineState");
+        }
+        else if (req.body.cmd  == "goStraight"){
+            exec("echo 8 > /home/pi/KonRoBot/manualControl");
+        }
+        else if (req.body.cmd  == "turnLeft"){
+            exec("echo 4 > /home/pi/KonRoBot/manualControl");
+        }
+        else if (req.body.cmd  == "stopDM"){
+            exec("echo 5 > /home/pi/KonRoBot/manualControl");
+        }
+        else if (req.body.cmd  == "turnRight"){
+            exec("echo 6 > /home/pi/KonRoBot/manualControl");
+        }
+        else if (req.body.cmd  == "goBack"){
+            exec("echo 2 > /home/pi/KonRoBot/manualControl");
         }
     }
 });

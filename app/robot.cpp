@@ -4,35 +4,38 @@
 #include "file.h"
 #include "robot.h"
 
-auto diodePin {21};
-auto buzzerPin {20};
-auto buttonPin {17};
-auto rightSensorPin {0};
-auto leftSensorPin {26};
-auto rightMotorPwm {23};
-auto rightMotorDir {24};
-auto leftMotorPwm {26};
-auto leftMotorDir {22};
+auto constexpr diode_pin{21};
+auto constexpr buzzer_pin{20};
+auto constexpr right_sensor_pin{0};
+auto constexpr left_sensor_pin{26};
+auto constexpr right_motor_pwm{23};
+auto constexpr right_motor_dir{24};
+auto constexpr left_motor_pwm{26};
+auto constexpr left_motor_dir{22};
 
-auto defaultSpeed {100};
+auto constexpr default_speed{100};
+auto constexpr path_to_manual_control{"/home/pi/KonRoBot/manualControl"};
 
-Robot::Robot() : 
-    right_motor(rightMotorPwm, rightMotorDir),
-    left_motor(leftMotorPwm, leftMotorDir),
-    stop_button(buttonPin),
-    right_button(rightSensorPin),
-    left_button(leftSensorPin),
-    diode(diodePin),
-    buzzer(buzzerPin) {}
+auto constexpr state_off{0};
+auto constexpr state_on{1};
+
+Robot::Robot() :
+    right_motor(right_motor_pwm, right_motor_dir),
+    left_motor(left_motor_pwm, left_motor_dir),
+    right_button(right_sensor_pin),
+    left_button(left_sensor_pin),
+    diode(diode_pin),
+    buzzer(buzzer_pin) {}
+
 Robot::~Robot() { stop(); }
 
 void Robot::make_signal()
 {
-    diode.set_state(1);
-    buzzer.set_state(1);
+    diode.set_state(state_on);
+    buzzer.set_state(state_on);
     std::this_thread::sleep_for(std::chrono::milliseconds(250));
-    diode.set_state(0);
-    buzzer.set_state(0);
+    diode.set_state(state_off);
+    buzzer.set_state(state_off);
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
 }
 
@@ -41,97 +44,93 @@ void Robot::draw_rectangle()
     make_signal();
     for (int i=0; i<4; i++)
     {
-        go_forward(defaultSpeed);
+        go_forward(default_speed);
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         stop();
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        go_right(defaultSpeed);
+        go_right(default_speed);
      }  
 }
 
 void Robot::drive_independently_with_manual_sensor()
 {
-    for (int i=0; i<2; i++) make_signal();
-
-    while (stop_button.is_pressed())
+    go_forward(default_speed);
+    if(left_button.is_pressed() == state_on)
     {
-        go_forward(defaultSpeed);
-        if(left_button.is_pressed() == 0)
-        {
-            make_signal();
-            go_back(defaultSpeed);
-            std::this_thread::sleep_for(std::chrono::milliseconds(400));
-            go_right(defaultSpeed);
-        }
-        if(right_button.is_pressed() == 0)
-        {
-            make_signal();
-            go_back(defaultSpeed);
-            std::this_thread::sleep_for(std::chrono::milliseconds(400));
-            go_left(defaultSpeed);
-        }
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        make_signal();
+        go_back(default_speed);
+        std::this_thread::sleep_for(std::chrono::milliseconds(400));
+        go_right(default_speed);
     }
-    stop();
+    if(right_button.is_pressed() == state_on)
+    {
+        make_signal();
+        go_back(default_speed);
+        std::this_thread::sleep_for(std::chrono::milliseconds(400));
+        go_left(default_speed);
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
 }
 
 void Robot::drive_manually()
 {
+    int direction{state_off};
 
-    int direction{0};
-
-    for (int i=0; i<3; i++) make_signal();
-
-    while (stop_button.is_pressed())
+    File file_control(path_to_manual_control);
+    auto file_content = file_control.read();
+    do
     {
-        std::cin >> direction;
-        switch (direction)
+        switch (file_content = file_control.read(); stoi(*file_content))
         {
             case 8:
-                go_forward(defaultSpeed);
+                go_forward(default_speed);
                 break;
             case 4:
-                go_left(defaultSpeed);
+                go_left(default_speed);
+                file_control.write("5");
                 break;
             case 6:
-                go_right(defaultSpeed);
+                go_right(default_speed);
+                file_control.write("5");
                 break;
             case 2:
-                go_back(defaultSpeed);
+                go_back(default_speed);
                 break;
             default:
                 stop();
+                file_control.write("0");
                 break;
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    }
-    stop();
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    } while (stoi(*file_content) != state_off);
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
 }
 
 void Robot::drive_independently_with_light_sensors()
 {
-    for (int i=0; i<4; i++) make_signal();
-
-    auto path_to_analog = "/home/pi/sensor";
+    auto path_to_analog = "/home/pi/KonRoBot/sensor";
     File file(path_to_analog);
 
-    while (stop_button.is_pressed())
+    if(file.read() == "0")
     {
-        if(file.read() == "0")
-        {
-            go_forward(60);
-        }
-        else if(file.read() > "0")
-        {
-            go_right(100,100);
-        }
-        else if(file.read() < "0")
-        {
-            go_left(100,100);
-        }
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        go_forward(60);
     }
-    stop();
+    else if(file.read() > "0")
+    {
+        go_right(100,100);
+    }
+    else if(file.read() < "0")
+    {
+        go_left(100,100);
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+}
+
+void Robot::stop()
+{
+    buzzer.set_state(state_off);
+    left_motor.action(state_off);
+    right_motor.action(state_off);
 }
 
 void Robot::go_forward(int speed)
@@ -148,22 +147,16 @@ void Robot::go_back(int speed)
 
 void Robot::go_right(int speed, int sleep)
 {
-    left_motor.action(0);
+    left_motor.action(state_off);
     right_motor.action(speed);
     std::this_thread::sleep_for(std::chrono::milliseconds(sleep));
-    right_motor.action(0);
+    right_motor.action(state_off);
 }
 
 void Robot::go_left(int speed, int sleep)
 {
-    right_motor.action(0);
+    right_motor.action(state_off);
     left_motor.action(-speed);
     std::this_thread::sleep_for(std::chrono::milliseconds(sleep));
-    left_motor.action(0);
-}
-
-void Robot::stop()
-{
-    left_motor.action(0);
-    right_motor.action(0);
+    left_motor.action(state_off);
 }

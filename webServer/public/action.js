@@ -48,4 +48,44 @@ $(function () {
             data: {cmd: "stop"},
         });
     });
+    $('#goStraight').click(() => {
+        $.ajax({
+            type: "POST",
+            url: '/action',
+            dataType: 'json',
+            data: {cmd: "goStraight"},
+        });
+    });
+    $('#turnLeft').click(() => {
+        $.ajax({
+            type: "POST",
+            url: '/action',
+            dataType: 'json',
+            data: {cmd: "turnLeft"},
+        });
+    });
+    $('#stopDM').click(() => {
+        $.ajax({
+            type: "POST",
+            url: '/action',
+            dataType: 'json',
+            data: {cmd: "stopDM"},
+        });
+    });
+    $('#turnRight').click(() => {
+        $.ajax({
+            type: "POST",
+            url: '/action',
+            dataType: 'json',
+            data: {cmd: "turnRight"},
+        });
+    });
+    $('#goBack').click(() => {
+        $.ajax({
+            type: "POST",
+            url: '/action',
+            dataType: 'json',
+            data: {cmd: "goBack"},
+        });
+    });
 });

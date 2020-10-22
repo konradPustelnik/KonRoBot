@@ -1,8 +1,8 @@
 #include <iostream>
+#include <stdlib.h>
+#include <algorithm>
 #include <wiringPi.h>
 #include "motor.h"
-#include <algorithm>
-#include <stdlib.h>
 
 Motor::Motor(int pwm_pin, int dir_pin) : pwm_pin(pwm_pin), dir_pin(dir_pin)
 {   
