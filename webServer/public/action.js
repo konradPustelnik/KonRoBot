@@ -1,4 +1,8 @@
 $(function () {
+    $('#KonRoBotAvatar').on( "load", function(){
+        magnify("KonRoBotAvatar", 5);
+    });
+
     $('#makeSignal').click(() => {
         $.ajax({
             type: "POST",

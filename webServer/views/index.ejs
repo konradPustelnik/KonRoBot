@@ -3,6 +3,8 @@
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/action.js" type="text/javascript"></script>
+    <script src="/image.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/style.css" />
     <title>KonRoBot</title>
     <meta charset="UTF-8">
@@ -19,7 +21,7 @@
     <div class="row">
         <div class="side">
             <h2>About me:</h2>
-            <img src="/KonRoBot.img" alt="Avatar" class="image">
+            <img id="KonRoBotAvatar" src="/KonRoBot.img" alt="Avatar" class="image">
             <p><strong>Sensor value:</strong> <%=value%></p>
             <p>Positive value is rightSensor, negative value is leftSensor</p>
         </div>
@@ -47,11 +49,14 @@
                     <button id="goBack" style="float: center">Go back</button>
                 </div>
             </div>
+            <a href="https://twitter.com/home" target="_blank" class="fa fa-twitter"></a>
+            <a href="https://www.linkedin.com/in/konrad-pustelnik/" target="_blank" class="fa fa-linkedin"></a>
+            <a href="https://www.facebook.com/" target="_blank" class="fa fa-facebook"></a>
         </div>
         </div>
     </div>
     <div class="footer">
-        <h2>Copyright 2020 Konrad Pustelnik</h2>
+        <h3>Copyright 2020 Konrad Pustelnik</h3>
     </div>
 </body>
 </html>
