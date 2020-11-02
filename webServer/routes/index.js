@@ -53,6 +53,9 @@ router.post('/action', function(req, res, next) {
         else if (req.body.cmd  == "goBack"){
             exec("echo 2 > /home/pi/KonRoBot/manualControl");
         }
+        else if (req.body.cmd  == "speed"){
+            exec("echo " + req.body.speed + " > /home/pi/KonRoBot/speed");
+        }
     }
 });
 
