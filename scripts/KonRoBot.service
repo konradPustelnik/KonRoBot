@@ -1,0 +1,15 @@
+[Unit]
+Description=Running app KonRoBot
+After=network.target
+
+[Service]
+Type=idle
+WorkingDirectory=/home/pi/KonRoBot/KonRoBot/app/
+ExecStartPre=/usr/bin/make
+ExecStart=/usr/bin/sudo ./app
+RestartSec=60
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target

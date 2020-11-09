@@ -1,0 +1,15 @@
+[Unit]
+Description=Starting webServer
+After=network.target
+
+[Service]
+Type=idle
+WorkingDirectory=/home/pi/KonRoBot/KonRoBot/webServer/
+ExecStartPre=/usr/bin/sudo npm install express ejs multer
+ExecStart=/usr/bin/sudo node ./app.js
+RestartSec=60
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
