@@ -1,7 +1,7 @@
 #!/bin/bash
 
 systemd_dir=/etc/systemd/system
-services=( KonRoBot RPI webServer )
+services=( KonRoBot RPI )
 
 for service in "${services[@]}"
 do
