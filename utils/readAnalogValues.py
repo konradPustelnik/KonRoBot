@@ -3,7 +3,7 @@ import time
 import busio
 import digitalio
 import board
-import adafruit_mcp3xxx.mcp3008 as MCP
+import adafruit_mcp3xxx.mcp3008 as MCP 
 from adafruit_mcp3xxx.analog_in import AnalogIn
 
 # create the spi bus, chip select, mcp object and analog input channel on pin 0 and 1
@@ -34,8 +34,8 @@ while True:
     left_value = remap_range(left_sensor, 0, 65535, 0, 100)
     right_value= remap_range(right_sensor, 0, 65535, 0, 100)
 
-    #write this value difference to /home/pi/KonRoBot/tools/sensor
-    with open("/home/pi/KonRoBot/tools/sensor", 'w') as myfile:
+    #write this value difference to /home/pi/sensor
+    with open("/home/pi/KonRoBot/tools/sensorValue", 'w') as myfile:
         myfile.write('{volume}' .format(volume = right_value-left_value))
 
     time.sleep(0.5)
