@@ -1,12 +1,14 @@
 cmake_minimum_required(VERSION 3.10)
 project(KonRoBot)
 
+include_directories("../src/file_manager/include/" "../src/file_manager/src/")
+
 # Locate GTest
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
  
 # Link runTests with what we want to test and the GTest and pthread library
-add_executable(runTests tests.cpp)
+add_executable(runTests tests.cpp ${SOURCES})
 target_link_libraries(runTests ${GTEST_LIBRARIES} pthread)
 
 # To support C++17

@@ -1,9 +1,10 @@
 # KonRoBot #
 
-### After first cloning on your RPI, run:
-* cd scripts && sed -i -e 's/\r$//' init.sh && ./init.sh
+### After the first clone to your RPI, run to configure systemd:
+* ./utils/init.sh
 
-### For diode.sh:  
-##### Use command:  
-* sudo ./diode.sh -p 21 3 (pin 21 means 40 on RPI)  
-* sudo ./diode.sh -t 21 17 18 3  
+### To cleanup systemd, run:
+* ./utils/clean.sh
+
+### To run Unit Test:
+* cd build && cmake CMakeLists.txt && make && ./runTests

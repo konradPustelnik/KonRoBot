@@ -1,0 +1,30 @@
+#Makefile
+
+SRCS = \
+	src/motor.cpp \
+	src/robot.cpp
+
+# include for motor.h and robot.h
+# file_manager/include for file.h
+#gpio_devices/include for diode.h, buzzer.h and button.h
+#pin/include for output_pin.h
+INCS = \
+	-Iinclude \
+	-I../file_manager/include \
+	-I../gpio_devices/include \
+	-I../pin/include
+
+CFLAGS ?= -Wall -Wextra -Werror -std=c++17 -c
+
+default: librobot
+
+librobot: ${SRCS:.cpp=.o}
+	ar rcs librobot.a ${SRCS:.cpp=.o}
+
+%.o: %.cpp
+	g++ ${CFLAGS} ${INCS} -o $@ $<
+
+clean:
+	$(RM) *.a src/*.o
+
+.SILENT:
