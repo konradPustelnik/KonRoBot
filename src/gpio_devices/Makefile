@@ -16,12 +16,12 @@ CFLAGS ?= -Wall -Wextra -Werror -std=c++17 -c
 default: libgpiodevices
 
 libgpiodevices: ${SRCS:.cpp=.o}
-	ar rcs libgpiodevices.a ${SRCS:.cpp=.o}
+	ar rcs ../../lib/libgpiodevices.a ${SRCS:.cpp=.o}
 
 %.o: %.cpp
 	g++ ${CFLAGS} ${INCS} -o $@ $<
 
 clean:
-	$(RM) *.a src/*.o
+	$(RM) src/*.o
 
 .SILENT:

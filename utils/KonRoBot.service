@@ -5,8 +5,8 @@ After=network.target
 [Service]
 Type=idle
 WorkingDirectory=/home/pi/KonRoBot/KonRoBot/
-ExecStartPre=mkdir -p bin
-ExecStartPre=/usr/bin/make -C src/
+ExecStartPre=mkdir -p bin lib
+ExecStartPre=/usr/bin/make
 ExecStart=/usr/bin/sudo ./bin/KonRoBot
 RestartSec=60
 Restart=always

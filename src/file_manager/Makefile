@@ -12,12 +12,12 @@ CFLAGS ?= -Wall -Wextra -Werror -std=c++17 -c
 default: libfile
 
 libfile: ${SRCS:.cpp=.o}
-	ar rcs libfile.a ${SRCS:.cpp=.o}
+	ar rcs ../../lib/libfile.a ${SRCS:.cpp=.o}
 
 %.o: %.cpp
 	g++ ${CFLAGS} ${INCS} -o $@ $<
 
 clean:
-	$(RM) *.a src/*.o
+	$(RM) src/*.o
 
 .SILENT:

@@ -16,12 +16,12 @@ CFLAGS ?= -Wall -Wextra -Werror -std=c++17 -c
 default: libpin
 
 libpin: ${SRCS:.cpp=.o}
-	ar rcs libpin.a ${SRCS:.cpp=.o}
+	ar rcs ../../lib/libpin.a ${SRCS:.cpp=.o}
 
 %.o: %.cpp
 	g++ ${CFLAGS} ${INCS} -o $@ $<
 
 clean:
-	$(RM) *.a src/*.o
+	$(RM) src/*.o
 
 .SILENT:

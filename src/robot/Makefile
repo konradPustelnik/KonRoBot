@@ -19,12 +19,12 @@ CFLAGS ?= -Wall -Wextra -Werror -std=c++17 -c
 default: librobot
 
 librobot: ${SRCS:.cpp=.o}
-	ar rcs librobot.a ${SRCS:.cpp=.o}
+	ar rcs ../../lib/librobot.a ${SRCS:.cpp=.o}
 
 %.o: %.cpp
 	g++ ${CFLAGS} ${INCS} -o $@ $<
 
 clean:
-	$(RM) *.a src/*.o
+	$(RM) src/*.o
 
 .SILENT:
