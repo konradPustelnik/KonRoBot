@@ -25,13 +25,13 @@ void Motor::action(int speed)
 void Motor::go_forward(int speed)
 {
     digitalWrite(dir_pin, 0);
-    pwmWrite(pwm_pin, pwm_range*speed);
+    pwmWrite(pwm_pin, pwm_range * speed);
 }
 
 void Motor::go_back(int speed)
 {
     digitalWrite(dir_pin, 1);
-    pwmWrite(pwm_pin, pwm_range*speed);
+    pwmWrite(pwm_pin, pwm_range * speed);
 }
 
 void Motor::stop()

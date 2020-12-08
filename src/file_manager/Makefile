@@ -4,7 +4,6 @@ SRCS = \
 	src/file.cpp
 
 # include for pin.h
-# pin/include for input_pin.h and output_pin.h
 INCS = \
 	-Iinclude \
 

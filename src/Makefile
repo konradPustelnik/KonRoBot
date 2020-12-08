@@ -24,8 +24,10 @@ OBJS = \
 
 default: app
 
+#C++ Error: undefined reference to `main' -c flag
+
 app: libfile_manager libgpio_devices libpin librobot
-	g++ $(CFLAGS)  $(INCS) -c ${SRCS} -o main.o
+	g++ $(CFLAGS) $(INCS) -c ${SRCS} -o main.o
 	g++ ${OBJS} ${CFLAGS} ${LIBS} -o ../bin/KonRoBot
 
 libfile_manager:

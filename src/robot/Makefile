@@ -6,8 +6,8 @@ SRCS = \
 
 # include for motor.h and robot.h
 # file_manager/include for file.h
-#gpio_devices/include for diode.h, buzzer.h and button.h
-#pin/include for output_pin.h
+# gpio_devices/include for diode.h, buzzer.h and button.h
+# pin/include for output_pin.h
 INCS = \
 	-Iinclude \
 	-I../file_manager/include \

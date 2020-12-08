@@ -4,22 +4,20 @@
 #include "file.h"
 #include "robot.h"
 
-auto constexpr diode_pin{21};
-auto constexpr buzzer_pin{20};
-auto constexpr right_sensor_pin{0};
-auto constexpr left_sensor_pin{26};
-auto constexpr right_motor_pwm{23};
-auto constexpr right_motor_dir{24};
-auto constexpr left_motor_pwm{26};
-auto constexpr left_motor_dir{22};
+auto static constexpr diode_pin{21};
+auto static constexpr buzzer_pin{20};
+auto static constexpr right_sensor_pin{0};
+auto static constexpr left_sensor_pin{26};
+auto static constexpr right_motor_pwm{23};
+auto static constexpr right_motor_dir{24};
+auto static constexpr left_motor_pwm{26};
+auto static constexpr left_motor_dir{22};
 
-auto constexpr default_speed{100};
-auto constexpr path_to_manual_control{"/home/pi/KonRoBot/tools/manualControl"};
+auto static constexpr state_off{0};
+auto static constexpr state_on{1};
 
-auto constexpr state_off{0};
-auto constexpr state_on{1};
-
-Robot::Robot() :
+Robot::Robot(int speed) :
+    speed(speed),
     right_motor(right_motor_pwm, right_motor_dir),
     left_motor(left_motor_pwm, left_motor_dir),
     right_button(right_sensor_pin),
@@ -28,6 +26,11 @@ Robot::Robot() :
     buzzer(buzzer_pin) {}
 
 Robot::~Robot() { stop(); }
+
+void Robot::set_speed(int set_speed)
+{
+    speed = (set_speed * 60) / 100 + 40;
+}
 
 void Robot::make_signal()
 {
@@ -42,57 +45,57 @@ void Robot::make_signal()
 void Robot::draw_rectangle()
 {
     make_signal();
-    for (int i=0; i<4; i++)
+    for (int i = 0; i < 4; i++)
     {
-        go_forward(default_speed);
+        go_forward(speed);
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         stop();
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        go_right(default_speed);
+        go_right(speed);
      }  
 }
 
 void Robot::drive_independently_with_manual_sensor()
 {
-    go_forward(default_speed);
+    go_forward(speed);
     if(left_button.is_pressed() == state_on)
     {
         make_signal();
-        go_back(default_speed);
+        go_back(speed);
         std::this_thread::sleep_for(std::chrono::milliseconds(400));
-        go_right(default_speed);
+        go_right(speed);
     }
     if(right_button.is_pressed() == state_on)
     {
         make_signal();
-        go_back(default_speed);
+        go_back(speed);
         std::this_thread::sleep_for(std::chrono::milliseconds(400));
-        go_left(default_speed);
+        go_left(speed);
     }
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
 }
 
 void Robot::drive_manually()
 {
-    File file_control(path_to_manual_control);
+    File file_control("/home/pi/KonRoBot/tools/manualControl");
     auto file_content = file_control.read();
     do
     {
         switch (file_content = file_control.read(); stoi(*file_content))
         {
             case 8:
-                go_forward(default_speed);
+                go_forward(speed);
                 break;
             case 4:
-                go_left(default_speed);
+                go_left(speed);
                 file_control.write("5");
                 break;
             case 6:
-                go_right(default_speed);
+                go_right(speed);
                 file_control.write("5");
                 break;
             case 2:
-                go_back(default_speed);
+                go_back(speed);
                 break;
             default:
                 stop();
@@ -106,20 +109,19 @@ void Robot::drive_manually()
 
 void Robot::drive_independently_with_light_sensors()
 {
-    auto path_to_analog = "/home/pi/KonRoBot/tools/sensor";
-    File file(path_to_analog);
+    File file("/home/pi/KonRoBot/tools/sensor");
 
     if(file.read() == "0")
     {
-        go_forward(60);
+        go_forward(speed);
     }
     else if(file.read() > "0")
     {
-        go_right(100,100);
+        go_right(speed, 100);
     }
     else if(file.read() < "0")
     {
-        go_left(100,100);
+        go_left(speed, 100);
     }
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
 }
