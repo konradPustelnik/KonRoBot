@@ -1,7 +1,6 @@
 #Makefile
 
-SRCS = \
-	src/main.cpp
+SRCS = ${wildcard src/*.cpp}
 
 CFLAGS ?= -lwiringPi -Wall -Wextra -Werror -std=c++17
 

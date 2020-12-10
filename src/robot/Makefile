@@ -1,8 +1,6 @@
 #Makefile
 
-SRCS = \
-	src/motor.cpp \
-	src/robot.cpp
+SRCS = ${wildcard src/*.cpp}
 
 # include for motor.h and robot.h
 # file_manager/include for file.h

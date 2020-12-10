@@ -1,9 +1,6 @@
 #Makefile
 
-SRCS = \
-	src/input_pin.cpp \
-	src/output_pin.cpp \
-	src/pin.cpp
+SRCS = ${wildcard src/*.cpp}
 
 # include for pin.h
 # file_manager/include for file.h

@@ -1,9 +1,6 @@
 #Makefile
 
-SRCS = \
-	src/button.cpp \
-	src/buzzer.cpp \
-	src/diode.cpp
+SRCS = ${wildcard src/*.cpp}
 
 # include for pin.h
 # pin/include for input_pin.h and output_pin.h
