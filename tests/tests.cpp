@@ -37,13 +37,13 @@
 //     EXPECT_NE("failtest", file.read());
 // }
 
-// // This is a parameterization structure
-// struct TestParameters {
-//     std::string path;
-//     std::string input;
-//     std::string output;
-//     std::string failoutput;
-// };
+// This is a parameterization structure
+struct TestParameters {
+    std::string path;
+    std::string input;
+    std::string output;
+    std::string failoutput;
+};
 
 class FileTest : public ::testing::TestWithParam<TestParameters> {};
 

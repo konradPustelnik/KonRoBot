@@ -13,4 +13,5 @@
 * cmake -H. -Bbuild && cmake --build build
 
 ### To run Unit Test:
-* cd build && cmake CMakeLists.txt && make && ./runTests
+* cd tests && cmake -H. -Bbuild && cmake --build build && ./build/runTests && cd -
+
