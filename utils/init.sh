@@ -3,6 +3,8 @@
 services=( KonRoBot.service RPI.service )
 systemd_dir=/etc/systemd/system
 
+mkdir -p bin lib
+
 for service in "${services[@]}"
 do
     sudo cp utils/"$service" "$systemd_dir"/"$service"
