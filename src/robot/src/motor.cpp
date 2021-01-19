@@ -4,7 +4,7 @@
 #include <wiringPi.h>
 #include "motor.h"
 
-Motor::Motor(int pwm_pin, int dir_pin) : pwm_pin(pwm_pin), dir_pin(dir_pin)
+Motor::Motor(int set_pwm_pin, int set_dir_pin) : pwm_pin(set_pwm_pin), dir_pin(set_dir_pin)
 {   
     pinMode(dir_pin, OUTPUT);
     pinMode(pwm_pin, PWM_OUTPUT);

@@ -12,7 +12,7 @@ INCS = \
 	-I../gpio_devices/include \
 	-I../pin/include
 
-CFLAGS ?= -Wall -Wextra -Werror -std=c++17 -c
+CFLAGS ?= -Wall -Wextra -Werror -Wshadow -pedantic -std=c++17 -c
 
 default: librobot
 

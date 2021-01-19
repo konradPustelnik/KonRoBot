@@ -4,9 +4,9 @@
 class Buzzer
 {
     Output_pin output_pin;
-    int rpi_pin;
+    int pin;
 
 public:
-    Buzzer(int rpi_pin);
+    Buzzer(int set_pin);
     void set_state(int led_state);
 };

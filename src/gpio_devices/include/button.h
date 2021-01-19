@@ -4,9 +4,9 @@
 class Button
 {
     Input_pin input_rpi_pin;
-    int rpi_pin;
+    int pin;
 
 public:
-    Button(int rpi_pin);
+    Button(int set_pin);
     bool is_pressed();
 };

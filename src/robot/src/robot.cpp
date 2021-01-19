@@ -16,8 +16,8 @@ auto static constexpr left_motor_dir{22};
 auto static constexpr state_off{0};
 auto static constexpr state_on{1};
 
-Robot::Robot(int speed) :
-    speed(speed),
+Robot::Robot(int set_speed) :
+    speed(set_speed),
     right_motor(right_motor_pwm, right_motor_dir),
     left_motor(left_motor_pwm, left_motor_dir),
     right_button(right_sensor_pin),
@@ -133,30 +133,30 @@ void Robot::stop()
     right_motor.action(state_off);
 }
 
-void Robot::go_forward(int speed)
+void Robot::go_forward(int set_speed)
 {
-    right_motor.action(-speed);
-    left_motor.action(speed);
+    right_motor.action(-set_speed);
+    left_motor.action(set_speed);
 }
 
-void Robot::go_back(int speed)
+void Robot::go_back(int set_speed)
 {
-    right_motor.action(speed);
-    left_motor.action(-speed);
+    right_motor.action(set_speed);
+    left_motor.action(-set_speed);
 }
 
-void Robot::go_right(int speed, int sleep)
+void Robot::go_right(int set_speed, int sleep)
 {
     left_motor.action(state_off);
-    right_motor.action(speed);
+    right_motor.action(set_speed);
     std::this_thread::sleep_for(std::chrono::milliseconds(sleep));
     right_motor.action(state_off);
 }
 
-void Robot::go_left(int speed, int sleep)
+void Robot::go_left(int set_speed, int sleep)
 {
     right_motor.action(state_off);
-    left_motor.action(-speed);
+    left_motor.action(-set_speed);
     std::this_thread::sleep_for(std::chrono::milliseconds(sleep));
     left_motor.action(state_off);
 }

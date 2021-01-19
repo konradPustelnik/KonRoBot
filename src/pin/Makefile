@@ -8,7 +8,7 @@ INCS = \
 	-Iinclude \
 	-I../file_manager/include \
 
-CFLAGS ?= -Wall -Wextra -Werror -std=c++17 -c
+CFLAGS ?= -Wall -Wextra -Werror -Wshadow -pedantic -std=c++17 -c
 
 default: libpin
 

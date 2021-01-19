@@ -13,3 +13,7 @@ include_directories(include ../file_manager/include)
 
 #add cpp17 support
 target_compile_features(pin PRIVATE cxx_std_17)
+
+#add additional flags
+SET(GCC_COVERAGE_COMPILE_FLAGS "-Wall -Wextra -Werror -Wshadow -pedantic")
+add_definitions(${GCC_COVERAGE_COMPILE_FLAGS})

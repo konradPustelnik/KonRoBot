@@ -4,9 +4,9 @@
 class Diode
 {
     Output_pin output_pin;
-    int rpi_pin;
+    int pin;
 
 public:
-    Diode(int rpi_pin);
+    Diode(int set_pin);
     void set_state(int led_state);
 };

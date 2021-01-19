@@ -6,7 +6,7 @@ SRCS = ${wildcard src/*.cpp}
 INCS = \
 	-Iinclude \
 
-CFLAGS ?= -Wall -Wextra -Werror -std=c++17 -c
+CFLAGS ?= -Wall -Wextra -Werror -Wshadow -pedantic -std=c++17 -c
 
 default: libfile
 

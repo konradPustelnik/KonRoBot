@@ -1,7 +1,7 @@
 #include <iostream>
 #include "diode.h"
 
-Diode::Diode(int rpi_pin) : output_pin(rpi_pin), rpi_pin(rpi_pin) {};
+Diode::Diode(int set_pin) : output_pin(set_pin), pin(set_pin) {}
 
 void Diode::set_state(int led_state)
 {

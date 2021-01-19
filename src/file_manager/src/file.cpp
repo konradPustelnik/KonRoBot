@@ -2,7 +2,7 @@
 #include <fstream>
 #include "file.h"
 
-File::File(std::string filename) : filename(filename) {};
+File::File(std::string set_filename) : filename(set_filename) {}
 
 std::optional<std::string> File::read()
 {

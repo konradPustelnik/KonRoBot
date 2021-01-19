@@ -2,7 +2,7 @@
 
 SRCS = ${wildcard src/*.cpp}
 
-CFLAGS ?= -lwiringPi -Wall -Wextra -Werror -std=c++17
+CFLAGS ?= -lwiringPi -Wall -Wextra -Werror -Wshadow -pedantic -std=c++17
 
 INCS = \
 	-Isrc/file_manager/include \

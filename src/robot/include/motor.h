@@ -6,7 +6,7 @@ class Motor
     const float pwm_range{6.5};
 
 public:
-    Motor(int pwm_pin, int dir_pin);
+    Motor(int set_pwm_pin, int set_dir_pin);
     ~Motor();
     void action(int speed);
 

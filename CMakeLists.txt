@@ -38,3 +38,7 @@ target_compile_features(KonRoBot PRIVATE cxx_std_17)
 #add wiringPi support
 find_library(wiringPi_LIB wiringPi)
 target_link_libraries(KonRoBot ${wiringPi_LIB})
+
+#add additional flags
+SET(GCC_COVERAGE_COMPILE_FLAGS "-Wall -Wextra -Werror -Wshadow -pedantic")
+add_definitions(${GCC_COVERAGE_COMPILE_FLAGS})
