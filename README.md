@@ -15,3 +15,5 @@
 ### To run Unit Test:
 * cd tests && cmake -H. -Bbuild && cmake --build build && ./build/runTests && cd -
 
+### To run Unit Test and then Make and Cmake:
+* ./utils/buildAndCompile.sh
