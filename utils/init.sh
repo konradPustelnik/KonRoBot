@@ -4,6 +4,7 @@ services=( KonRoBot.service RPI.service )
 systemd_dir=/etc/systemd/system
 
 mkdir -p bin lib
+git config core.hooksPath hooks
 
 for service in "${services[@]}"
 do

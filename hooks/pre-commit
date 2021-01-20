@@ -1,0 +1,11 @@
+#!/bin/bash
+
+PURPLE='\033[0;35m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+echo -e ""$(date +"%T":"%N")" ${PURPLE}[#   ]${NC} Pre-commit Started"
+
+./utils/buildAndCompile.sh\
+    && echo -e ""$(date +"%T":"%N")" ${PURPLE}[##  ]${NC} Pre-commit Finished"\
+        || echo -e ""$(date +"%T":"%N")" ${RED}[#   ]${NC} Pre-commit Failed"
