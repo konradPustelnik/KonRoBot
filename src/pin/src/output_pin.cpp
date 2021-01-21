@@ -1,4 +1,3 @@
-#include <iostream>
 #include "file.h"
 #include "output_pin.h"
 

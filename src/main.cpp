@@ -1,9 +1,6 @@
-#include <iostream>
-#include <chrono>
 #include <thread>
 #include <wiringPi.h>
 #include "robot.h"
-#include "button.h"
 #include "file.h"
 
 int main()

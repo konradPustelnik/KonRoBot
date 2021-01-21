@@ -1,4 +1,3 @@
-#include <iostream>
 #include "diode.h"
 
 Diode::Diode(int set_pin) : output_pin(set_pin), pin(set_pin) {}

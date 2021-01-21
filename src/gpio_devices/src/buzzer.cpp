@@ -1,4 +1,3 @@
-#include <iostream>
 #include "buzzer.h"
 
 Buzzer::Buzzer(int set_pin) : output_pin(set_pin), pin(set_pin) {}

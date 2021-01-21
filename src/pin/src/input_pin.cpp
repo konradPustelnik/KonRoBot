@@ -1,7 +1,4 @@
-#include <iostream>
-#include <wiringPi.h>
 #include "file.h"
-#include "pin.h"
 #include "input_pin.h"
 
 //can use pin from base class Pin

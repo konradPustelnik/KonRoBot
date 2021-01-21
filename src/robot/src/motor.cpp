@@ -1,5 +1,3 @@
-#include <iostream>
-#include <stdlib.h>
 #include <algorithm>
 #include <wiringPi.h>
 #include "motor.h"

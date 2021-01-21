@@ -1,5 +1,3 @@
-#include <iostream>
-#include <chrono>
 #include <thread>
 #include "file.h"
 #include "robot.h"
