@@ -6,6 +6,14 @@ NC='\033[0m'
 
 echo -e ""$(date +"%T":"%N")" ${PURPLE}[#   ]${NC} Pre-commit Started"
 
-./utils/buildAndCompile.sh\
-    && echo -e ""$(date +"%T":"%N")" ${PURPLE}[##  ]${NC} Pre-commit Finished"\
-        || echo -e ""$(date +"%T":"%N")" ${RED}[#   ]${NC} Pre-commit Failed"
+if [[ $(find . -name "*.sh" -exec /usr/bin/shellcheck {} \;) ]]; then
+    echo "Please fix: $(find . -name "*.sh" -exec /usr/bin/shellcheck {} \;)"
+    echo -e ""$(date +"%T":"%N")" ${RED}[#   ]${NC} Pre-commit Failed"
+    exit 1
+else
+    echo "-- Shellcheck passed"
+fi
+
+(./utils/buildAndCompile.sh\
+    && echo -e ""$(date +"%T":"%N")" ${PURPLE}[##  ]${NC} Pre-commit Finished")\
+        || (echo -e ""$(date +"%T":"%N")" ${RED}[#   ]${NC} Pre-commit Failed"; exit 1)
