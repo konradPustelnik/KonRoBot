@@ -9,11 +9,11 @@
 ### To start make compilation, run:
 * make
 
-### To start Cmake compilation, run:
+### To start Cmake and Unit Test compilation, run:
 * cmake -H. -Bbuild && cmake --build build
 
 ### To run Unit Test:
-* cd tests && cmake -H. -Bbuild && cmake --build build && ./build/runTests && cd -
+* ./bin/KonRoBotTests
 
 ### To run Unit Test and then Make and Cmake:
 * ./utils/buildAndCompile.sh

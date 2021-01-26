@@ -16,12 +16,7 @@ run_cmake()
 
 unit_tests_building()
 {
-    (
-        cd tests || exit
-        cmake -H. -Bbuild \
-            && cmake --build build \
-                && ./build/runTests
-    )
+    ./bin/KonRoBotTests
 }
 
 output()

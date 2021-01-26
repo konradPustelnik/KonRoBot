@@ -5,9 +5,9 @@ project(KonRoBot)
 #definition of MAIN parameter
 set(MAIN src/main.cpp)
 
-#definition of LIBS and SOURCES parameters using wildcards
+#definition of LIBS and TEST_SOURCES parameters using wildcards
 #file(GLOB LIBS lib/*.a)
-#file(GLOB_RECURSE SOURCES src/*.cpp)
+file(GLOB_RECURSE TEST_SOURCES tests/*.cpp)
 
 #set of output directory for KonRoBot binary
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ../bin)
@@ -42,3 +42,15 @@ target_link_libraries(KonRoBot ${wiringPi_LIB})
 #add additional flags
 SET(GCC_COVERAGE_COMPILE_FLAGS "-Wall -Wextra -Werror -Wshadow -pedantic")
 add_definitions(${GCC_COVERAGE_COMPILE_FLAGS})
+
+### KonRoBotTests ###
+#include GTest and file.cpp
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS} "src/file_manager/src/")
+
+#executable command
+add_executable(KonRoBotTests ${TEST_SOURCES})
+
+#link KonRoBotTests with what we want to test and the GTest and pthread library
+target_link_libraries(KonRoBotTests ${GTEST_LIBRARIES} pthread)
+set_property(TARGET KonRoBotTests PROPERTY CXX_STANDARD 17)

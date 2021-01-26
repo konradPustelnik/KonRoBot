@@ -77,8 +77,3 @@ INSTANTIATE_TEST_CASE_P(InputOutputTester, FileTest, ::testing::Values(
     TestParameters{"/tmp/tmpfile", "test2", "test2", "failtest2"},
     TestParameters{"/tmp/tmpfile", "test3", "test3", "failtest3"}
 ));
-
-int main(int argc, char **argv) {
-    testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}
